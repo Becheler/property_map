@@ -10,8 +10,9 @@
 #ifndef BOOST_SHARED_ARRAY_PROPERTY_MAP_HPP
 #define BOOST_SHARED_ARRAY_PROPERTY_MAP_HPP
 
-#include <boost/smart_ptr/shared_array.hpp>
 #include <boost/property_map/property_map.hpp>
+#include <memory>
+#include <vector>
 
 namespace boost {
 
@@ -30,14 +31,14 @@ class shared_array_property_map
   explicit inline shared_array_property_map(
     size_t n,
     const IndexMap& _id = IndexMap())
-  : data(new T[n]), index(_id) {}
+  : data(std::make_shared<std::vector<T> >(n)), index(_id) {}
 
   inline T& operator[](key_type v) const {
-    return data[get(index, v)];
+    return (*data)[get(index, v)];
   }
 
   private:
-  boost::shared_array<T> data;
+  std::shared_ptr<std::vector<T> > data;
   IndexMap index;
 };
 

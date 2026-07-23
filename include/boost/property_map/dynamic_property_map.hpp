@@ -22,13 +22,13 @@
 #include <boost/property_map/property_map.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/any.hpp>
-#include <boost/function/function3.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/type.hpp>
 #include <boost/type_index.hpp>
 #include <boost/smart_ptr.hpp>
 #include <exception>
+#include <functional>
 #include <map>
 #include <sstream>
 #include <stdexcept>
@@ -211,10 +211,10 @@ struct dynamic_properties
 {
   typedef std::multimap<std::string, boost::shared_ptr<dynamic_property_map> >
     property_maps_type;
-  typedef boost::function3<boost::shared_ptr<dynamic_property_map>,
+  typedef std::function<boost::shared_ptr<dynamic_property_map>(
                            const std::string&,
                            const boost::any&,
-                           const boost::any&> generate_fn_type;
+                           const boost::any&)> generate_fn_type;
 public:
 
   typedef property_maps_type::iterator iterator;
